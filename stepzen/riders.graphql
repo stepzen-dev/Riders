@@ -1,0 +1,48 @@
+type Rider {
+  id: ID!
+  first_name: String
+  last_name: String
+}
+type Ride {
+  id: ID!
+  title: String
+  description: String
+  height: String
+  countries: String
+  continent: String
+  image: String
+  slug: String
+  updated_at: String
+}
+
+type RiderRide {
+  rider_id: ID!
+  ride_id: ID!
+}
+
+type Query {
+  rider(id: ID!): Rider
+    @rest(
+      resultroot: ""
+      endpoint: "https://rider-rest.herokuapp.com/riders/$id;"
+    )
+  riders: [Rider]
+    @rest(resultroot: "", endpoint: "https://rider-rest.herokuapp.com/riders")
+  rides: [Ride]
+    @rest(resultroot: "", endpoint: "https://rider-rest.herokuapp.com/rides")
+  ride(id: ID!): Ride
+    @rest(
+      resultroot: ""
+      endpoint: "https://rider-rest.herokuapp.com/rides/$id;"
+    )
+  riderrides(rider_id: ID!): [RiderRide]
+    @rest(
+      resultroot: ""
+      endpoint: "https://rider-rest.herokuapp.com/riderrides?rider_id=$rider_id;"
+    )
+  ridertorides: [RiderRide]
+    @rest(
+      resultroot: ""
+      endpoint: "https://rider-rest.herokuapp.com/riderrides"
+    )
+}

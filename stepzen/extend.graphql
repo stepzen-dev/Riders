@@ -1,0 +1,12 @@
+extend type Rider {
+  myRides: [RiderRide]
+    @materializer(
+      query: "riderrides"
+      arguments: [{ name: "rider_id", field: "id" }]
+    )
+}
+
+extend type RiderRide {
+  mountainRode: Ride
+    @materializer(query: "ride", arguments: [{ name: "id", field: "ride_id" }])
+}
