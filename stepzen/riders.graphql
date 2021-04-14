@@ -2,6 +2,28 @@ type Rider {
   id: ID!
   first_name: String
   last_name: String
+  bike_model: String!
+  rideSlugs: [Slug]
+    @materializer(query: "rideSlugs", arguments: [{ name: "id", field: "id" }])
+  myBike: Bike
+    @materializer(
+      query: "bike"
+      arguments: [{ name: "model", field: "bike_model" }]
+    )
+}
+type Bike {
+  model: String!
+  color: String
+  description: String
+  type: String
+}
+type Slug {
+  slug: String!
+  myRides: [Ride]
+    @materializer(
+      query: "rideBySlug"
+      arguments: [{ name: "slug", field: "slug" }]
+    )
 }
 type Ride {
   id: ID!
@@ -11,19 +33,19 @@ type Ride {
   countries: String
   continent: String
   image: String
-  slug: String
+  slug: String!
   updated_at: String
-}
-
-type RiderRide {
-  rider_id: ID!
-  ride_id: ID!
 }
 
 type Query {
   rider(id: ID!): Rider
+    @rest(endpoint: "https://rider-rest.herokuapp.com/riders/$id;")
+  bike(model: String!): Bike
+    @rest(endpoint: "https://rider-rest.herokuapp.com/bikes?model=$model;")
+  bikes: [Bike] @rest(endpoint: "https://rider-rest.herokuapp.com/bikes")
+  rideSlugs(id: ID!): [Slug]
     @rest(
-      resultroot: ""
+      resultroot: "rides[]"
       endpoint: "https://rider-rest.herokuapp.com/riders/$id;"
     )
   riders: [Rider]
@@ -35,14 +57,6 @@ type Query {
       resultroot: ""
       endpoint: "https://rider-rest.herokuapp.com/rides/$id;"
     )
-  riderrides(rider_id: ID!): [RiderRide]
-    @rest(
-      resultroot: ""
-      endpoint: "https://rider-rest.herokuapp.com/riderrides?rider_id=$rider_id;"
-    )
-  ridertorides: [RiderRide]
-    @rest(
-      resultroot: ""
-      endpoint: "https://rider-rest.herokuapp.com/riderrides"
-    )
+  rideBySlug(slug: String!): [Ride]
+    @rest(endpoint: "https://rider-rest.herokuapp.com/rides?slug=$slug;")
 }

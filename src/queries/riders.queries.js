@@ -6,8 +6,9 @@ export const GET_RIDER = gql`
       first_name
       id
       last_name
-      myRides {
-        mountainRode {
+      rideSlugs {
+        slug
+        myRides {
           continent
           countries
           description
@@ -26,11 +27,12 @@ export const GET_RIDER = gql`
 export const GET_RIDERS = gql`
   query GetRidersById {
     riders {
-      id
       first_name
+      id
       last_name
-      myRides {
-        mountainRode {
+      rideSlugs {
+        slug
+        myRides {
           continent
           countries
           description
