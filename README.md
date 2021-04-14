@@ -1,6 +1,8 @@
 # Professional Riders and the Mountains climbed.
 
-This example showcases StepZen data linking using the @materilizer to tie bikers with details
+This example showcases StepZen data linking using the @materilizer to bring together professional bikers, details of the mountains they have rode, and the bikes that they are riding on.
+
+Keep in mind, this is sample data and the mountains and bikes these professional riders have rode is dummy data.
 
 ## Demo
 
