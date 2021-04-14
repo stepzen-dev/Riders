@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 //wrapper function for the bar chart to
 //render bars as ReactJs components
 function Leaderboard(props) {
-  const { height, sourceData } = props;
-
-  const margin = { top: 20, right: 20, bottom: 30, left: 45 };
-  const barChartHeight = height - margin.top - margin.bottom;
+  const { sourceData } = props;
 
   const data = sourceData;
 
-  // console.log("data", data);
+  console.log("data", data);
 
   let barData = [];
 
@@ -19,14 +16,17 @@ function Leaderboard(props) {
     let name = rider.first_name + " " + rider.last_name;
     let riderId = rider.id;
     let mountains = [];
-    rider?.myRides?.map(function (mountain) {
-      // console.log("mountain", mountain.mountainRode.height);
-      let number = mountain.mountainRode.height.replaceAll("m", "");
-      number = mountain.mountainRode.height.replaceAll(",", "");
-      number = parseFloat(number);
-      mountains.push(number);
+    rider.rideSlugs.map(function (mountain) {
+      mountain.myRides.map(function (mountain) {
+        // console.log("mountain", mountain.height);
+        let number = mountain.height.replaceAll("m", "");
+        number = mountain.height.replaceAll(",", "");
+        number = parseFloat(number);
+        mountains.push(number);
+        return mountains;
+      });
+      return mountains;
     });
-    // console.log("mountains typeof", typeof mountains);
     // console.log("mountains", mountains);
     let added = mountains.reduce((a, b) => a + b, 0);
     // console.log("name", name);
@@ -40,12 +40,8 @@ function Leaderboard(props) {
   console.log("barData", barData);
 
   barData.sort((a, b) => {
-    // console.log("a", a.height);
-    // console.log("b", b.height);
     return b.height - a.height;
   });
-
-  // console.log("numArray", barData);
 
   return (
     <article className="leaderboard">
